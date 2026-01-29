@@ -1,0 +1,503 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   Variables CSS - Tema claro/oscuro
+   ========================================================================== */
+
+:root {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
+  --color-secondary: #6366f1;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  /* Tema claro */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8fafc;
+  --bg-tertiary: #f1f5f9;
+  --bg-chat: #ffffff;
+  --bg-chat-user: linear-gradient(135deg, #2563eb 0%, #6366f1 100%);
+  --bg-chat-assistant: #f1f5f9;
+  
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-tertiary: #94a3b8;
+  --text-inverse: #ffffff;
+  
+  --border-color: #e2e8f0;
+  --border-color-light: #f1f5f9;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.3);
+}
+
+.dark {
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --bg-chat: #1e293b;
+  --bg-chat-user: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --bg-chat-assistant: #334155;
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #64748b;
+  --text-inverse: #0f172a;
+  
+  --border-color: #334155;
+  --border-color-light: #475569;
+  
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(51, 65, 85, 0.5);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-secondary);
+  min-height: 100vh;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   Animaciones
+   ========================================================================== */
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-scale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.4s ease-out forwards;
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Typing Indicator
+   ========================================================================== */
+
+.typing-indicator {
+  display: flex;
+  gap: 5px;
+  padding: 4px 0;
+}
+
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  animation: typing-bounce 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.15s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-tertiary);
+}
+
+/* ==========================================================================
+   Glass Effect
+   ========================================================================== */
+
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+}
+
+/* ==========================================================================
+   Modal / Overlay
+   ========================================================================== */
+
+.modal-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ==========================================================================
+   Lazy Image
+   ========================================================================== */
+
+.lazy-image {
+  background: linear-gradient(90deg, var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.lazy-image.loaded {
+  animation: none;
+  background: none;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn-primary {
+  background: var(--bg-chat-user);
+  color: var(--text-inverse);
+  font-weight: 500;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   Chat Bubbles
+   ========================================================================== */
+
+.chat-bubble-user {
+  background: var(--bg-chat-user);
+  color: white;
+  border-radius: 20px;
+  border-bottom-right-radius: 6px;
+  box-shadow: var(--shadow-md);
+}
+
+.chat-bubble-assistant {
+  background: var(--bg-chat-assistant);
+  color: var(--text-primary);
+  border-radius: 20px;
+  border-bottom-left-radius: 6px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Property Cards
+   ========================================================================== */
+
+.property-mini {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-md);
+}
+
+.property-mini:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-xl);
+}
+
+.property-mini-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+  padding: 2.5rem 0.75rem 0.75rem;
+}
+
+/* ==========================================================================
+   Input
+   ========================================================================== */
+
+.input-chat {
+  background: var(--bg-tertiary);
+  border: 2px solid transparent;
+  border-radius: 14px;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.input-chat::placeholder {
+  color: var(--text-tertiary);
+}
+
+.input-chat:focus {
+  outline: none;
+  background: var(--bg-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.card {
+  background: var(--bg-primary);
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-color-light);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==========================================================================
+   Map Styles
+   ========================================================================== */
+
+.leaflet-container {
+  background: var(--bg-tertiary) !important;
+  font-family: inherit;
+}
+
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: var(--shadow-lg) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+
+.leaflet-control-zoom a {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border: none !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  font-size: 18px !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background: var(--bg-tertiary) !important;
+}
+
+.custom-property-marker {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* ==========================================================================
+   Carousel
+   ========================================================================== */
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.carousel-dot.active {
+  width: 24px;
+  border-radius: 4px;
+  background: white;
+}
+
+/* ==========================================================================
+   Theme Toggle
+   ========================================================================== */
+
+.theme-toggle {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--bg-tertiary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid var(--border-color);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+}
+
+.dark .theme-toggle-thumb {
+  left: calc(100% - 22px);
+  background: #fbbf24;
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle hover glow */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+}
