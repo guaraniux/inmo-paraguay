@@ -10,7 +10,9 @@ import ThemeToggle from '../components/ui/ThemeToggle'
 import { Mensaje, Inmueble } from '../lib/types'
 import { cleanResponse, removeDuplicates } from '../lib/utils'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app') 
+  ? 'https://inmo-backend-e6zz.onrender.com' 
+  : 'http://localhost:8000')
 
 export default function HomePage() {
   const [mensajes, setMensajes] = useState<Mensaje[]>([])
