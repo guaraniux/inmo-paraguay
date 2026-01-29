@@ -55,12 +55,11 @@ if vercel_url:
     allowed_origins.append(f"https://{vercel_url}")
     allowed_origins.append(vercel_url)
 
-# En producción, permitir todos los orígenes de Vercel
+# En producción, permitir todos los orígenes de Vercel usando regex
 if os.getenv('PRODUCTION', 'false').lower() == 'true':
-    allowed_origins.append("https://*.vercel.app")
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=allowed_origins,
+        allow_origin_regex=r'^https://.*\.vercel\.app$',
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
