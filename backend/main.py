@@ -20,9 +20,15 @@ from pydantic import BaseModel
 from typing import Optional, List, Dict, Any
 import sys
 import os
+from dotenv import load_dotenv
 
 # Agregar directorio padre al path para importar módulos
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
+
+# Cargar variables de entorno desde .env en la raíz del proyecto
+env_path = os.path.join(project_root, '.env')
+load_dotenv(dotenv_path=env_path)
 
 from agente import AgenteInmoParaguay
 from scraper import InfocasasScraper
@@ -52,14 +58,22 @@ if vercel_url:
 # En producción, permitir todos los orígenes de Vercel
 if os.getenv('PRODUCTION', 'false').lower() == 'true':
     allowed_origins.append("https://*.vercel.app")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=allowed_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=allowed_origins,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
+else:
+    # En desarrollo, permitir cualquier puerto en localhost y 127.0.0.1
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origin_regex=r'^https?://(localhost|127\.0\.0\.1)(:\d+)?$',
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
 # =============================================================================
 # ALMACENAMIENTO DE SESIONES
